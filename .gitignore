@@ -1,0 +1,8 @@
+!module/
+module/*
+!module/iot-monitor
+**/.idea/
+**/target/
+**/.DS_Store
+**/.git
+**/*.iml
