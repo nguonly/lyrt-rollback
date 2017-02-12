@@ -5,8 +5,7 @@ import demo.rollback.server.evolution.Encryption;
 import net.role4j.Compartment;
 import net.role4j.DumpHelper;
 import net.role4j.evolution.UAdaptationXMLParser;
-import net.role4j.rollback.AdaptationConfiguration;
-import net.role4j.rollback.ControlUnit;
+import net.role4j.rollback.AdaptationTransaction;
 
 import javax.swing.*;
 
@@ -71,7 +70,7 @@ public class AppState {
 
         compartment.activate();
         try {
-            try(AdaptationConfiguration ac = new AdaptationConfiguration()) {
+            try(AdaptationTransaction ac = new AdaptationTransaction()) {
                 channel.bind(Encryption.class);
             }
             DumpHelper.dumpRelations();
@@ -86,7 +85,7 @@ public class AppState {
 
         compartment.activate();
         try {
-            try(AdaptationConfiguration ac = new AdaptationConfiguration()) {
+            try(AdaptationTransaction ac = new AdaptationTransaction()) {
                 channel.bind(Compression.class);
             }
             DumpHelper.dumpRelations();
@@ -99,7 +98,7 @@ public class AppState {
         txtMsg.append("Adapt (Encryption -> Compression)\n");
         compartment.activate();
         try {
-            try(AdaptationConfiguration ac = new AdaptationConfiguration()) {
+            try(AdaptationTransaction ac = new AdaptationTransaction()) {
                 channel.bind(Encryption.class).bind(Compression.class);
             }
         } catch (Throwable throwable) {
@@ -111,7 +110,7 @@ public class AppState {
         txtMsg.append("Adapt (Compression -> Encryption)\n");
         compartment.activate();
         try {
-            try(AdaptationConfiguration ac = new AdaptationConfiguration()) {
+            try(AdaptationTransaction ac = new AdaptationTransaction()) {
                 channel.bind(Compression.class).bind(Encryption.class);
             }
         } catch (Throwable throwable) {
@@ -123,7 +122,7 @@ public class AppState {
         txtMsg.append("Reset Adaptation\n");
         compartment.activate();
         try {
-            try(AdaptationConfiguration ac = new AdaptationConfiguration()) {
+            try(AdaptationTransaction ac = new AdaptationTransaction()) {
                 channel.unbindAll();
             }
         } catch (Throwable throwable) {

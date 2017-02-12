@@ -3,8 +3,8 @@ package net.role4j.rollback;
 /**
  * Created by nguonly on 1/12/17.
  */
-public class AdaptationConfiguration implements AutoCloseable {
-    public AdaptationConfiguration(){
+public class AdaptationTransaction implements AutoCloseable {
+    public AdaptationTransaction(){
         enter();
     }
 

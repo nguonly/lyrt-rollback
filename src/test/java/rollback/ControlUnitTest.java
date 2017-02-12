@@ -1,7 +1,7 @@
 package rollback;
 
 import net.role4j.*;
-import net.role4j.rollback.AdaptationConfiguration;
+import net.role4j.rollback.AdaptationTransaction;
 import net.role4j.rollback.ControlUnit;
 import org.junit.Assert;
 import org.junit.Test;
@@ -110,14 +110,14 @@ public class ControlUnitTest extends BaseTest {
 
         comp.activate();
 
-        try(AdaptationConfiguration ac = new AdaptationConfiguration()) {
+        try(AdaptationTransaction ac = new AdaptationTransaction()) {
             p.bind(A.class);
             p.bind(B.class);
         }
 
         Assert.assertEquals("B", p.doThing());
 
-        try(AdaptationConfiguration ac = new AdaptationConfiguration()) {
+        try(AdaptationTransaction ac = new AdaptationTransaction()) {
             p.unbind(B.class);
         }
 
@@ -127,7 +127,7 @@ public class ControlUnitTest extends BaseTest {
 
         Assert.assertEquals("B", p.doThing());
 
-        try(AdaptationConfiguration ac = new AdaptationConfiguration()) {
+        try(AdaptationTransaction ac = new AdaptationTransaction()) {
             p.bind(C.class);
         }
 

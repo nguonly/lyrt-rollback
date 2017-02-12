@@ -9,7 +9,7 @@ recover from software bugs. The detail mechanism is illustrated in a submitting 
  Therefore, we only explain the motivating example implementation 
  that has not been well described in the paper due to space limit. 
  
-The additional implementations added to LyRT are `AdaptationConfiguration` and 
+The additional implementations added to LyRT are `AdaptationTransaction` and 
 `ControlUnit` class localed in `net.role4j.rollback` package. The bug sensor is 
 implemented as part of user applications to customize the recovery process. The sample 
 implementation of Bug Sensors for the example is depicted below.
@@ -71,7 +71,7 @@ public class Channel implements IChannel, IPlayer{
     public String prepareChannelForSending(String data){
         return data;
     }
-
+    
     public String prepareChannelForReceiving(String data){ return data;}
 }
 ```
@@ -82,7 +82,7 @@ public class Compression implements IChannel,IRole {
         //TODO: to be implemented
         return data;
     }
-
+    
     public String prepareChannelForSending(String data){
         String fMsg = getPlayer(IChannel.class).prepareChannelForSending(data);
         return "<C>" + fMsg + "<C>";
@@ -98,7 +98,7 @@ public class Encryption implements IChannel, IRole{
         //TODO: to be implemented
         return data;
     }
-
+    
     public String prepareChannelForSending(String data){
         String fMsg = getPlayer(IChannel.class).prepareChannelForSending(data);
         int i=1/0; //inject error
@@ -108,29 +108,31 @@ public class Encryption implements IChannel, IRole{
 ```
 
 #### Main Program
-The code below is a sample how to construct the binding process with adaptation configuration. 
+The code below is a sample how to construct the binding process with adaptation transaction. 
 
 ```java
-public static void main(String... args){
-    Registry reg = Registry.getRegistry(); //Mediator
-    Compartment ctxLZ = reg.newCompartment();
-    Channel channel = reg.newCore(Channel.class);
-    
-    ctxLZ.activate();
-    
-    try(AdaptationConfiguration ac = new AdaptationConfiguration()){
-        channel.bind(Compression.class);
+public class Main{
+    public static void main(String... args){
+        Registry reg = Registry.getRegistry(); //Mediator
+        Compartment ctxLZ = reg.newCompartment();
+        Channel channel = reg.newCore(Channel.class);
+        
+        ctxLZ.activate();
+        
+        try(AdaptationTransaction at1 = new AdaptationTransaction()){
+            channel.bind(Compression.class);
+        }
+        
+        // execute the rest of the program
+        
+        try(AdaptationTransaction at2 = new AdaptationTransaction()){
+            channel.bind(Encryption.class); //that contains an error
+        }
+        
+        //execute with divide-by-zero located in Encryption class
+        
+        ctxLZ.deactivate();
     }
-    
-    // execute the rest of the program
-    
-    try(AdaptationConfiguration ac = new AdaptationConfiguration()){
-        channel.bind(Encryption.class); //that contains an error
-    }
-    
-    //execute with divide-by-zero located in Encryption class
-    
-    ctxLZ.deactivate();
 }
 ```
 

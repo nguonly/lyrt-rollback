@@ -4,7 +4,7 @@ import net.role4j.Compartment;
 import net.role4j.DumpHelper;
 import net.role4j.IPlayer;
 import net.role4j.IRole;
-import net.role4j.rollback.AdaptationConfiguration;
+import net.role4j.rollback.AdaptationTransaction;
 import net.role4j.rollback.ControlUnit;
 import org.junit.Assert;
 import org.junit.Test;
@@ -106,19 +106,19 @@ public class ControlUnitOnStateTest extends BaseTest {
         Assert.assertEquals("Lycog", person.getName());
 
         IRole a;
-        try(AdaptationConfiguration ac = new AdaptationConfiguration()){
+        try(AdaptationTransaction ac = new AdaptationTransaction()){
             a = person.bind(A.class, "myA");
         }
 
         Assert.assertEquals("myA", person.getName());
 
-        try(AdaptationConfiguration ac = new AdaptationConfiguration()){
+        try(AdaptationTransaction ac = new AdaptationTransaction()){
             a.bind(B.class, "myB");
         }
 
         Assert.assertEquals("myB", person.getName());
 
-        try(AdaptationConfiguration ac = new AdaptationConfiguration()){
+        try(AdaptationTransaction ac = new AdaptationTransaction()){
             a.bind(C.class, "myC");
         }
         Assert.assertEquals("myC", person.getName());
