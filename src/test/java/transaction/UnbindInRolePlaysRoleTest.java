@@ -1,10 +1,9 @@
 package transaction;
 
 import net.role4j.*;
-import net.role4j.trans.Transaction;
+import net.role4j.trans.ConsistencyBlock;
 import org.junit.Assert;
 import org.junit.Test;
-import org.omg.IOP.TransactionService;
 import rolefeature.BaseTest;
 
 /**
@@ -78,7 +77,7 @@ public class UnbindInRolePlaysRoleTest extends BaseTest {
 //        DumpHelper.dumpRelations();
 //        DumpHelper.displayCallables(reg.coreCallable);
 
-        try(Transaction tx = new Transaction()) {
+        try(ConsistencyBlock tx = new ConsistencyBlock()) {
             Assert.assertEquals("<C><E>Data<E><C>", channel.send("Data"));
 
             Thread.sleep(1); //prevent from unexpected result as the time of transaction and unbound role is the same
@@ -90,7 +89,7 @@ public class UnbindInRolePlaysRoleTest extends BaseTest {
         }
 
         Assert.assertEquals("<E>Data<E>", channel.send("Data"));
-//        System.out.println("After Transaction");
+//        System.out.println("After ConsistencyBlock");
 //        DumpHelper.dumpRelations();
     }
 }

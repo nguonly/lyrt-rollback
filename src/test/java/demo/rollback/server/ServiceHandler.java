@@ -1,6 +1,6 @@
 package demo.rollback.server;
 
-import net.role4j.trans.Transaction;
+import net.role4j.trans.ConsistencyBlock;
 
 import java.net.Socket;
 
@@ -26,7 +26,7 @@ public class ServiceHandler extends Thread {
         communicator.setSocket(client);
 
         if(AppState.isTranquil) {
-            try (Transaction tx = new Transaction()) {
+            try (ConsistencyBlock tx = new ConsistencyBlock()) {
                 simulateTransaction();
             }
         }else{ //Without a transaction

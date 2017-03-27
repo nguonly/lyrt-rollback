@@ -8,6 +8,7 @@ import net.role4j.evolution.UAdaptationXMLParser;
 import net.role4j.rollback.AdaptationTransaction;
 
 import javax.swing.*;
+import java.util.Hashtable;
 
 /**
  * Created by nguonly on 10/14/16.
@@ -16,6 +17,7 @@ public class AppState {
     static ServerService serverService;
 
     static Compartment compartment;
+    static Hashtable<Integer, Compartment> hashCompartments = new Hashtable<>();//Socket Id, Compartment
     static Channel channel;
 
     static JTextArea txtMsg; //ServerMain Server Message in MessagePanel

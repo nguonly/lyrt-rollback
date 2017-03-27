@@ -1,12 +1,11 @@
 package rolefeature;
 
 import net.role4j.*;
-import net.role4j.trans.Transaction;
+import net.role4j.trans.ConsistencyBlock;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayDeque;
-import java.util.List;
 
 /**
  * Created by nguonly on 10/18/16.
@@ -112,7 +111,7 @@ public class UnbindAllTest extends BaseTest {
 
         any.setName("E");
 
-        try(Transaction tx = new Transaction()){
+        try(ConsistencyBlock tx = new ConsistencyBlock()){
             Assert.assertEquals("E", any.getName());
 
             any.unbindAll();
@@ -178,7 +177,7 @@ public class UnbindAllTest extends BaseTest {
         any2.bind(A.class);
         any2.setName("A");
 
-        try(Transaction tx = new Transaction()) {
+        try(ConsistencyBlock tx = new ConsistencyBlock()) {
             Assert.assertEquals("E", any1.getName());
             Assert.assertEquals("A", any2.getName());
 

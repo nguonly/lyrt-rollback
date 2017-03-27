@@ -2,9 +2,8 @@ package transaction;
 
 import net.role4j.Compartment;
 import net.role4j.Registry;
-import net.role4j.trans.Transaction;
+import net.role4j.trans.ConsistencyBlock;
 import org.junit.Test;
-import org.openjdk.jmh.runner.RunnerException;
 import rolefeature.BaseTest;
 
 /**
@@ -19,7 +18,7 @@ public class CompartmentActivationInTransactionTest extends BaseTest {
         Compartment comp = reg.newCompartment(Compartment.class);
         comp.activate();
 
-        try(Transaction tx = new Transaction()){
+        try(ConsistencyBlock tx = new ConsistencyBlock()){
             comp.activate();
         }
 
@@ -32,7 +31,7 @@ public class CompartmentActivationInTransactionTest extends BaseTest {
         Compartment comp = reg.newCompartment(Compartment.class);
         comp.activate();
 
-        try(Transaction tx = new Transaction()){
+        try(ConsistencyBlock tx = new ConsistencyBlock()){
             comp.deactivate();
         }
     }

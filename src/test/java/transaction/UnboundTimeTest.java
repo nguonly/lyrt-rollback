@@ -1,7 +1,7 @@
 package transaction;
 
 import net.role4j.*;
-import net.role4j.trans.Transaction;
+import net.role4j.trans.ConsistencyBlock;
 import org.junit.Assert;
 import org.junit.Test;
 import rolefeature.BaseTest;
@@ -118,7 +118,7 @@ public class UnboundTimeTest extends BaseTest {
         ScheduledExecutorService pool = Executors.newScheduledThreadPool(2);
         pool.schedule(unbindRunnable, 100, TimeUnit.MILLISECONDS);
 
-        try(Transaction tx = new Transaction()){
+        try(ConsistencyBlock tx = new ConsistencyBlock()){
             for(int i=0; i<50; i++){
                 String ret = any.getName();
 //                System.out.println(ret);
@@ -157,7 +157,7 @@ public class UnboundTimeTest extends BaseTest {
         final int[] counter = new int [1];
         Runnable newTransRunnable = () -> {
             comp.activate();
-            try(Transaction tx2 = new Transaction()) {
+            try(ConsistencyBlock tx2 = new ConsistencyBlock()) {
                 int c = 0;
                 for (int i = 0; i < 50; i++) {
                     String ret = any.getName();
@@ -181,7 +181,7 @@ public class UnboundTimeTest extends BaseTest {
         pool.schedule(unbindRunnable, 100, TimeUnit.MILLISECONDS);
         pool.schedule(newTransRunnable, 150, TimeUnit.MILLISECONDS);
 
-        try(Transaction tx = new Transaction()){
+        try(ConsistencyBlock tx = new ConsistencyBlock()){
             for(int i=0; i<50; i++){
                 String ret = any.getName();
 //                System.out.println(ret);
@@ -230,7 +230,7 @@ public class UnboundTimeTest extends BaseTest {
 
         Runnable tx2Thread = () -> {
             comp.activate();
-            try(Transaction tx2 = new Transaction()){
+            try(ConsistencyBlock tx2 = new ConsistencyBlock()){
                 int c = 0;
                 for(int i=0; i<100; i++) {
                     String ret = any.getName();
@@ -256,7 +256,7 @@ public class UnboundTimeTest extends BaseTest {
 
         Runnable tx3Thread = () -> {
             comp.activate();
-            try(Transaction tx3 = new Transaction()){
+            try(ConsistencyBlock tx3 = new ConsistencyBlock()){
                 int c = 0;
                 for(int i=0; i<100; i++){
                     String ret = any.getName();
@@ -276,7 +276,7 @@ public class UnboundTimeTest extends BaseTest {
         pool.schedule(unbindingThread, 180, TimeUnit.MILLISECONDS);
         pool.schedule(tx3Thread, 210, TimeUnit.MILLISECONDS);
 
-        try(Transaction tx = new Transaction()){
+        try(ConsistencyBlock tx = new ConsistencyBlock()){
             for(int i=0; i<100; i++){
                 String ret = any.getName();
                 Assert.assertEquals("D", ret);

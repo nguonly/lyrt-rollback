@@ -6,4 +6,5 @@ package demo.rollback.server;
 public interface IChannel {
     String prepareChannelForSending(String data);
     String prepareChannelForReceiving(String data);
+    int factor();
 }

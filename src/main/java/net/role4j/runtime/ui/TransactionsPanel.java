@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Transaction List Panel contains the list of actively available transactions with entering timestamp.
+ * ConsistencyBlock List Panel contains the list of actively available transactions with entering timestamp.
  * Created by nguonly on 10/19/16.
  */
 public class TransactionsPanel extends JPanel {

@@ -8,8 +8,8 @@ import java.time.LocalDateTime;
 /**
  * Created by nguonly on 5/31/16.
  */
-public class Transaction implements AutoCloseable{
-    public Transaction(){
+public class ConsistencyBlock implements AutoCloseable{
+    public ConsistencyBlock(){
         beginTransaction();
     }
 

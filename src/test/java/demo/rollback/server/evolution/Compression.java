@@ -15,6 +15,12 @@ public class Compression implements IChannel,IRole {
 
     public String prepareChannelForSending(String data){
         String fMsg = getPlayer(IChannel.class).prepareChannelForSending(data);
+        int factor = getPlayer(IChannel.class).factor();
+        double i = 1/Math.pow(2, factor); //there is no chance of divide-by-zero error
         return "<C>" + fMsg + "<C>";
+    }
+
+    public int factor(){
+        return 0;
     }
 }

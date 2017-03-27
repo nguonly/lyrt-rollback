@@ -15,7 +15,11 @@ public class Encryption implements IChannel, IRole{
 
     public String prepareChannelForSending(String data){
         String fMsg = getPlayer(IChannel.class).prepareChannelForSending(data);
-        int i=1/0;
+        int i=1/getPlayer(IChannel.class).factor(); //the probably of an error
         return "<E>" + fMsg + "<E>";
+    }
+
+    public int factor(){
+        return 5;
     }
 }

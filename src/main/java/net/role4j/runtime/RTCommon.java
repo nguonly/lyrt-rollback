@@ -35,7 +35,7 @@ public class RTCommon {
     public static DefaultMutableTreeNode rootTransHashCallable = new DefaultMutableTreeNode("Root");
     public static DefaultTreeModel modelTransHashCallable = new DefaultTreeModel(rootTransHashCallable);
 
-    //For Active Transaction Table
+    //For Active ConsistencyBlock Table
     public static DefaultTableModel modelTransactions = new DefaultTableModel(new Object[][]{}, new Object[]{"Thread Id","Trans Id", "Entering Time"});
 
     public static void performRefresh(){

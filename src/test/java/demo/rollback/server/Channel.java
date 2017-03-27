@@ -11,4 +11,8 @@ public class Channel implements IChannel, IPlayer{
     }
 
     public String prepareChannelForReceiving(String data){ return data;}
+
+    public int factor(){
+        return 10;
+    }
 }

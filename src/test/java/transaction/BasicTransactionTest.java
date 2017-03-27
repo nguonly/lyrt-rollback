@@ -1,7 +1,7 @@
 package transaction;
 
 import net.role4j.*;
-import net.role4j.trans.Transaction;
+import net.role4j.trans.ConsistencyBlock;
 import org.junit.Assert;
 import org.junit.Test;
 import rolefeature.BaseTest;
@@ -62,7 +62,7 @@ public class BasicTransactionTest extends BaseTest {
         ScheduledExecutorService pool = Executors.newScheduledThreadPool(2);
         pool.schedule(newBinding, 100, TimeUnit.MILLISECONDS);
 
-        try(Transaction tx = new Transaction()) {
+        try(ConsistencyBlock tx = new ConsistencyBlock()) {
             DumpHelper.displayTransactionCallables();
             for(int i=0; i<100; i++) {
                 String ret = p.getName();
@@ -96,7 +96,7 @@ public class BasicTransactionTest extends BaseTest {
 
         Runnable newTxRunnable = () -> {
             comp.activate();
-            try(Transaction newTx = new Transaction()) {
+            try(ConsistencyBlock newTx = new ConsistencyBlock()) {
                 int counter = 0;
                 for (int i = 0; i < 50; i++) {
                     String ret = p.getName();
@@ -119,7 +119,7 @@ public class BasicTransactionTest extends BaseTest {
         pool.schedule(newBinding, 100, TimeUnit.MILLISECONDS);
         pool.schedule(newTxRunnable, 150, TimeUnit.MILLISECONDS);
 
-        try(Transaction tx = new Transaction()) {
+        try(ConsistencyBlock tx = new ConsistencyBlock()) {
             DumpHelper.displayTransactionCallables();
             for(int i=0; i<100; i++) {
                 String ret = p.getName();
@@ -154,7 +154,7 @@ public class BasicTransactionTest extends BaseTest {
         final int[] counter = new int[1];
         Runnable newTxRunnable = () -> {
             comp.activate();
-            try(Transaction newTx = new Transaction()) {
+            try(ConsistencyBlock newTx = new ConsistencyBlock()) {
                 int c = 0;
                 for (int i = 0; i < 50; i++) {
                     String ret = p.getName();
@@ -177,7 +177,7 @@ public class BasicTransactionTest extends BaseTest {
         pool.schedule(newBinding, 100, TimeUnit.MILLISECONDS);
         pool.schedule(newTxRunnable, 150, TimeUnit.MILLISECONDS);
 
-        try(Transaction tx = new Transaction()) {
+        try(ConsistencyBlock tx = new ConsistencyBlock()) {
             DumpHelper.displayTransactionCallables();
             for(int i=0; i<100; i++) {
                 String ret = p.getName();

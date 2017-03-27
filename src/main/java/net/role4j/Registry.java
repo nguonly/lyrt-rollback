@@ -11,12 +11,8 @@ import net.bytebuddy.agent.ByteBuddyAgent;
 import net.bytebuddy.description.modifier.Visibility;
 import net.bytebuddy.dynamic.loading.ClassLoadingStrategy;
 import net.bytebuddy.dynamic.loading.ClassReloadingStrategy;
-import net.bytebuddy.dynamic.scaffold.subclass.ConstructorStrategy;
 import net.bytebuddy.implementation.InvocationHandlerAdapter;
-import net.bytebuddy.implementation.MethodCall;
-import net.bytebuddy.implementation.SuperMethodCall;
 import net.bytebuddy.matcher.ElementMatchers;
-import net.role4j.trans.Transaction;
 
 import java.lang.reflect.Method;
 import java.time.LocalDateTime;
@@ -53,7 +49,7 @@ public class Registry {
 //    public HashMap<Integer, List<Relation>> hashTransRelations = new HashMap<>(); //TransactionId, List<Relation> of associated transaction
 
     /**
-     * Transaction list
+     * ConsistencyBlock list
      * Long is thread id
      * SimpleEntry is the key value of TransactionId and Entering Timestamp
      */

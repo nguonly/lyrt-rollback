@@ -17,4 +17,6 @@ public class Logger implements IChannel, IRole{
         String fMsg = getPlayer(IChannel.class).prepareChannelForSending(data);
         return "<L>" + fMsg + "<L>";
     }
+
+    public int factor(){return 1;}
 }

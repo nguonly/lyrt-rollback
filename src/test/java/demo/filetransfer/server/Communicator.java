@@ -1,8 +1,5 @@
 package demo.filetransfer.server;
 
-import demo.filetransfer.server.AppState;
-import net.role4j.trans.Transaction;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;

@@ -1,5 +1,6 @@
 package demo.rollback.client;
 
+import com.sun.deploy.panel.JavaPanel;
 import demo.filetransfer.server.ui.SmartScroller;
 
 import javax.swing.*;
@@ -17,12 +18,12 @@ public class ClientMain extends JFrame{
 
     public ClientMain(){
 
-        txtMsg = new JTextArea();
+        txtMsg = new JTextArea(20, 10);
         JScrollPane scrollPane = new JScrollPane(txtMsg);
         new SmartScroller(scrollPane);
 
         JPanel panel = new JPanel();
-        panel.setPreferredSize(new Dimension(30*10, 30*10));
+        //panel.setPreferredSize(new Dimension(30*10, 30*10));
         panel.setLayout(new BorderLayout());
         panel.add(scrollPane);
 
@@ -32,9 +33,15 @@ public class ClientMain extends JFrame{
         JButton btnDisconnect = new JButton("Discontect");
         btnDisconnect.addActionListener(e-> disconnect());
 
-        add(panel, BorderLayout.NORTH);
-        add(btnConnect, BorderLayout.WEST);
-        add(btnDisconnect, BorderLayout.EAST);
+        JPanel buttonPanel = new JavaPanel();
+        buttonPanel.setLayout(new BorderLayout());
+        buttonPanel.add(btnConnect, BorderLayout.WEST);
+        buttonPanel.add(btnDisconnect, BorderLayout.EAST);
+
+        add(panel, BorderLayout.CENTER);
+        add(buttonPanel, BorderLayout.NORTH);
+//        add(btnConnect, BorderLayout.WEST);
+//        add(btnDisconnect, BorderLayout.EAST);
 
 
         setTitle("Client of File Transfer Apps");

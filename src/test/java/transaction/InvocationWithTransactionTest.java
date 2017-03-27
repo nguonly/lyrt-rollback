@@ -1,7 +1,7 @@
 package transaction;
 
 import net.role4j.*;
-import net.role4j.trans.Transaction;
+import net.role4j.trans.ConsistencyBlock;
 import org.junit.Assert;
 import org.junit.Test;
 import rolefeature.BaseTest;
@@ -85,7 +85,7 @@ public class InvocationWithTransactionTest extends BaseTest {
 
         Assert.assertEquals("Any", any.getName());
 
-        try(Transaction tx = new Transaction()){
+        try(ConsistencyBlock tx = new ConsistencyBlock()){
             for(int i=0;i<50;i++) {
                 Assert.assertEquals("Any", any.getName());
 
@@ -128,7 +128,7 @@ public class InvocationWithTransactionTest extends BaseTest {
         ScheduledExecutorService pool = Executors.newScheduledThreadPool(5);
         pool.schedule(bindingThread, 100, TimeUnit.MILLISECONDS);
 
-        try(Transaction tx = new Transaction()){
+        try(ConsistencyBlock tx = new ConsistencyBlock()){
 //            DumpHelper.displayTransactionCallables();
             for(int i=0; i<100; i++){
                 String ret = any.getName();
