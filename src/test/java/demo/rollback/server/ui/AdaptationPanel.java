@@ -13,10 +13,10 @@ public class AdaptationPanel extends JPanel {
 
 
     public AdaptationPanel() throws Throwable{
-        JButton btnEncryptionAdaptation = new JButton("Adapt(Encryption)");
+        JButton btnEncryptionAdaptation = new JButton("Adapt(AES)");
         JButton btnCompressionAdaptation = new JButton("Adapt(Compression)");
-        JButton btnEncCompAdaptation = new JButton("Adapt(Encryption -> Compression)");
-        JButton btnCompEncAdaptation = new JButton("Adapt(Compression -> Encryption)");
+        JButton btnEncCompAdaptation = new JButton("Adapt(AES -> Compression)");
+        JButton btnCompEncAdaptation = new JButton("Adapt(Compression -> AES)");
         JButton btnResetAdaptation = new JButton("Reset Adaptation");
 //        JButton btnUnanticipatedAdaptation = new JButton("Unanticipated Adaptation");
         JButton btnRTMonitor = new JButton("Runtime Monitor");

@@ -63,8 +63,8 @@ public class AppState {
     }
 
     public static void performEncryptionAdaptation(){
-//        System.out.println("Perform Encryption Adaptation");
-        txtMsg.append("Adapt (Encryption)\n");
+//        System.out.println("Perform AES Adaptation");
+        txtMsg.append("Adapt (AES)\n");
 
         compartment.activate();
         try {
@@ -76,7 +76,7 @@ public class AppState {
     }
 
     public static void performCompressionAdaptation(){
-//        System.out.println("Perform Encryption Adaptation");
+//        System.out.println("Perform AES Adaptation");
         txtMsg.append("Adapt (Compression)\n");
 
         compartment.activate();
@@ -89,7 +89,7 @@ public class AppState {
     }
 
     public static void performEncryptionCompressionAdaptation(){
-        txtMsg.append("Adapt (Encryption -> Compression)\n");
+        txtMsg.append("Adapt (AES -> Compression)\n");
         compartment.activate();
         try {
             channel.unbindAll();
@@ -100,7 +100,7 @@ public class AppState {
     }
 
     public static void performCompressionEncryptionAdaptation(){
-        txtMsg.append("Adapt (Compression -> Encryption)\n");
+        txtMsg.append("Adapt (Compression -> AES)\n");
         compartment.activate();
         try {
             channel.unbindAll();

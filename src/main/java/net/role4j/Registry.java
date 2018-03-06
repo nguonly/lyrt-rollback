@@ -164,7 +164,7 @@ public class Registry {
         return isEvolutionEmabled;
     }
 
-    public <T extends IRole> IRole bindCore(IPlayer object, Class<T> roleType, Object... args) throws Throwable {
+    public synchronized  <T extends IRole> IRole bindCore(IPlayer object, Class<T> roleType, Object... args) throws Throwable {
 //        T role = ReflectionHelper.newInstance(roleType, args);
         ICompartment compartment = getActiveCompartment();
         if (compartment == null) throw new RuntimeException("No compartment was found");
@@ -172,7 +172,7 @@ public class Registry {
         return bindCore(compartment, object, roleType, args);
     }
 
-    public <T extends IRole> IRole bindCore(ICompartment compartment, IPlayer object, Class<T> roleType, Object... args) throws Throwable{
+    public synchronized  <T extends IRole> IRole bindCore(ICompartment compartment, IPlayer object, Class<T> roleType, Object... args) throws Throwable{
         T role = ReflectionHelper.newInstance(roleType, args);
 
         IPlayer core = (IPlayer) object.getClass().getField("_real").get(object);
@@ -330,7 +330,7 @@ public class Registry {
         return proxyRole;
     }
 
-    private Object proxyHandler(Object core, Method method, Object... args) throws Throwable {
+    private synchronized Object proxyHandler(Object core, Method method, Object... args) throws Throwable {
         ICompartment compartment = getActiveCompartment();
 
         String m; //method
@@ -428,14 +428,14 @@ public class Registry {
         return roleClass;
     }
 
-    public void unbind(int compartmentId, int playerId, boolean isCore, String roleClass) throws Throwable{
+    public synchronized void unbind(int compartmentId, int playerId, boolean isCore, String roleClass) throws Throwable{
         ICompartment proxyCompartment = (ICompartment) Relation.getProxyCompartment(relations, compartmentId);
         Object proxyPlayer = Relation.getProxyPlayer(relations, playerId);
         Class<?> roleType = Class.forName(roleClass);
         unbind(proxyCompartment, proxyPlayer, isCore, roleType);
     }
 
-    public void unbind(ICompartment comp, Object player, boolean isCore, Class<?> roleType) throws Throwable {
+    public synchronized void unbind(ICompartment comp, Object player, boolean isCore, Class<?> roleType) throws Throwable {
         ICompartment compartment = comp==null? getActiveCompartment():comp;
         if (compartment == null) throw new RuntimeException("No active compartment was found");
 
@@ -489,7 +489,7 @@ public class Registry {
      * @param player
      * @throws Throwable
      */
-    public void unbindAll(Object player) throws Throwable {
+    public synchronized void unbindAll(Object player) throws Throwable {
         ICompartment compartment = getActiveCompartment();
         if (compartment == null) throw new RuntimeException("No active compartment was found");
 
@@ -747,7 +747,7 @@ public class Registry {
      * @param core
      * @return
      */
-    private boolean isBound(Object core) {
+    private synchronized boolean isBound(Object core) {
         Optional<Relation> optCoreRelation = relations.stream()
                 .filter(c -> c.object.equals(core))
                 .findFirst();
